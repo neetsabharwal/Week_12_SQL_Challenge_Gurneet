@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api", apiRoutes);
 
+//Utility functions for making async DB fetch calls
 //Get all Departments function
 async function printDeps() {
   axios
@@ -135,8 +136,10 @@ function init() {
     ])
     .then((choice) => {
       if (choice.action == "View all Departments") {
+        //Print all Departments
         printDeps();
       } else if (choice.action == "Add a Department") {
+        //Ask Department Name
         inquirer
           .prompt([
             {
@@ -145,10 +148,13 @@ function init() {
               name: "depName",
             },
           ])
+          //Create Department
           .then((ans) => addDep(ans.depName));
       } else if (choice.action == "View all Roles") {
+        //Print all Roles
         printRoles();
       } else if (choice.action == "Add a Role") {
+        //Ask required Role info
         inquirer
           .prompt([
             {
@@ -167,10 +173,13 @@ function init() {
                 name: "depId",
             },
           ])
+          //create Role
           .then((ans) => addRole(ans.roleTitle,ans.roleSalary,ans.depId));
       } else if (choice.action == "View all Employees") {
+        //Print all employees
         printEmps();
       } else if (choice.action == "Add an Employee") {
+        //Ask all required info
         inquirer
           .prompt([
             {
@@ -199,8 +208,10 @@ function init() {
                 name: "managerId",
             },
           ])
+          //create employee
           .then((ans) => addEmp(ans.empId,ans.firstName,ans.lastName,ans.roleId,ans.managerId));
       } else if (choice.action == "Do Nothing") {
+        //kill process
         process.exit("Bye!");
       }
     });

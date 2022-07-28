@@ -1,7 +1,9 @@
+//Require all modules
 const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
 
+//Print all employees
 router.get("/employees", (req, res) => {
   const sql = `SELECT * FROM employees`;
   db.query(sql, (err, rows) => {
@@ -16,6 +18,7 @@ router.get("/employees", (req, res) => {
   });
 });
 
+//Create an employee
 router.post("/employee", ({ body }, res) => {
     //Validate role doesn't already exist
     db.query(

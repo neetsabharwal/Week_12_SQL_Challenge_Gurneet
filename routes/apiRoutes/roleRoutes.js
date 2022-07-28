@@ -1,7 +1,9 @@
+//Require all modules
 const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
 
+//Get all Roles
 router.get("/roles", (req, res) => {
   const sql = `SELECT * FROM roles`;
   db.query(sql, (err, rows) => {
@@ -16,6 +18,7 @@ router.get("/roles", (req, res) => {
   });
 });
 
+//Add a role
 router.post("/role", ({ body }, res) => {
     //Validate role doesn't already exist
     db.query(
@@ -31,7 +34,7 @@ router.post("/role", ({ body }, res) => {
           //Add department since entry not duplicate
           const sql = "INSERT INTO roles (title,salary,department_id) VALUES (?,?,?)";
           const params = [body.title,body.salary,body.department_id];
-          
+
           db.query(sql, params, (err, result) => {
             if (err) {
               res.status(500).json({ error: err.message });

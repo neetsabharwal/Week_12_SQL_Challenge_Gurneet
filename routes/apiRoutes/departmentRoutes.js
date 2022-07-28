@@ -1,7 +1,9 @@
+//Require all modules
 const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
 
+//Get all Departments
 router.get("/departments", (req, res) => {
   const sql = `SELECT * FROM departments`;
   db.query(sql, (err, rows) => {
@@ -16,6 +18,7 @@ router.get("/departments", (req, res) => {
   });
 });
 
+//Create a Department
 router.post("/department", ({body},res) => {
 //   Validate department doesn't already exist
   db.query(
