@@ -110,7 +110,7 @@ function addEmp(empId,fName,lName,rId,mId) {
         console.log(error);
       })
       .then(function (res) {
-      //   // always executed
+        // always executed
         printEmps();
       });
   }
@@ -207,7 +207,7 @@ function init() {
             },
             {
                 type: "input",
-                message: "Fisrt Name",
+                message: "First Name",
                 name: "firstName",
             },
             {
@@ -243,7 +243,7 @@ function init() {
                 name: "managerId",
             },
           ])
-          //create employee
+          //update employee
           .then((ans) => updEmp(ans.empId,ans.managerId));
       } else if (choice.action == "Do Nothing") {
         //kill process

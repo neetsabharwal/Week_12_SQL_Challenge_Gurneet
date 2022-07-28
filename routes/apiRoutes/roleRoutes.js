@@ -28,10 +28,10 @@ router.post("/role", ({ body }, res) => {
         if (err) {
           res.status(500).json({ error: err.message });
         } else if (result.length != 0) {
-          //Duplicate Department Entry
+          //Duplicate Role Entry
           res.status(500).json({ error: "Role already exists in this Department." });
         } else {
-          //Add department since entry not duplicate
+          //Add Role since entry not duplicate
           const sql = "INSERT INTO roles (title,salary,department_id) VALUES (?,?,?)";
           const params = [body.title,body.salary,body.department_id];
 

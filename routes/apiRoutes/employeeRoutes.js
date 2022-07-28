@@ -20,7 +20,7 @@ router.get("/employees", (req, res) => {
 
 //Create an employee
 router.post("/employee", ({ body }, res) => {
-    //Validate role doesn't already exist
+    //Validate employee doesn't already exist
     db.query(
       `select * from roles where id = ?`,
       [body.id],
@@ -28,10 +28,10 @@ router.post("/employee", ({ body }, res) => {
         if (err) {
           res.status(500).json({ error: err.message });
         } else if (result.length != 0) {
-          //Duplicate Department Entry
+          //Duplicate Employee Entry
           res.status(500).json({ error: "Employee already exists." });
         } else {
-          //Add department since entry not duplicate
+          //Add Employee since entry not duplicate
           const sql = "INSERT INTO employees (id,first_name,last_name,role_id,manager_id) VALUES (?,?,?,?,?)";
           const params = [body.id,body.first_name,body.last_name,body.role_id,body.manager_id];
           
@@ -50,7 +50,7 @@ router.post("/employee", ({ body }, res) => {
     );
   });
 
-//Create an employee
+//Update an employee
 router.put("/employee/:id", (req, res) => {
   let body = req.body;
   //Validate employee exists
@@ -75,6 +75,7 @@ router.put("/employee/:id", (req, res) => {
           });
         });
       } else {
+        //Employee does not exist.
         res.status(500).json({ error: "Employee does not exist." });
       }
     }
