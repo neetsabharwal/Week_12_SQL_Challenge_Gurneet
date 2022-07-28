@@ -16,8 +16,8 @@ router.get("/departments", (req, res) => {
   });
 });
 
-router.post("/department", ({ body }, res) => {
-  //Validate department doesn't already exist
+router.post("/department", ({body},res) => {
+//   Validate department doesn't already exist
   db.query(
     `select * from departments where name = ?`,
     body.name,

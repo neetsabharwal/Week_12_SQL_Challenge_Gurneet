@@ -16,35 +16,35 @@ router.get("/employees", (req, res) => {
   });
 });
 
-// router.post("/employee", ({ body }, res) => {
-//     //Validate role doesn't already exist
-//     db.query(
-//       `select * from roles where title = ? AND department_id = ?`,
-//       [body.title,body.department_id],
-//       (err, result) => {
-//         if (err) {
-//           res.status(500).json({ error: err.message });
-//         } else if (result.length != 0) {
-//           //Duplicate Department Entry
-//           res.status(500).json({ error: "Role already exists in this Department." });
-//         } else {
-//           //Add department since entry not duplicate
-//           const sql = "INSERT INTO roles (title,salary,department_id) VALUES (?,?,?)";
-//           const params = [body.title,body.salary,body.department_id];
+router.post("/employee", ({ body }, res) => {
+    //Validate role doesn't already exist
+    db.query(
+      `select * from roles where id = ?`,
+      [body.id],
+      (err, result) => {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else if (result.length != 0) {
+          //Duplicate Department Entry
+          res.status(500).json({ error: "Employee already exists." });
+        } else {
+          //Add department since entry not duplicate
+          const sql = "INSERT INTO employees (id,first_name,last_name,role_id,manager_id) VALUES (?,?,?,?,?)";
+          const params = [body.id,body.first_name,body.last_name,body.role_id,body.manager_id];
           
-//           db.query(sql, params, (err, result) => {
-//             if (err) {
-//               res.status(500).json({ error: err.message });
-//               return;
-//             }
-//             res.json({
-//               message: "Success",
-//               data: body,
-//             });
-//           });
-//         }
-//       }
-//     );
-//   });
+          db.query(sql, params, (err, result) => {
+            if (err) {
+              res.status(500).json({ error: err.message });
+              return;
+            }
+            res.json({
+              message: "Success",
+              data: body,
+            });
+          });
+        }
+      }
+    );
+  });
 
 module.exports = router;
