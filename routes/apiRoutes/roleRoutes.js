@@ -5,7 +5,7 @@ const db = require("../../db/connection");
 
 //Get all Roles
 router.get("/roles", (req, res) => {
-  const sql = `SELECT * FROM roles`;
+  const sql = `SELECT roles.*, departments.name FROM roles left join departments on roles.department_id = departments.id`;
   db.query(sql, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
