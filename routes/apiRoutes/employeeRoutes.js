@@ -50,4 +50,35 @@ router.post("/employee", ({ body }, res) => {
     );
   });
 
+//Create an employee
+router.put("/employee/:id", (req, res) => {
+  let body = req.body;
+  //Validate employee exists
+  db.query(
+    `select * from employees where id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else if (result.length != 0) {
+        //Employee exists
+        const sql = "UPDATE employees SET manager_id = ? where id = ?";
+        const params = [body.manager_id,req.params.id];
+        db.query(sql, params, (err, result) => {
+          if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+          }
+          res.json({
+            message: "Success",
+            data: body,
+          });
+        });
+      } else {
+        res.status(500).json({ error: "Employee does not exist." });
+      }
+    }
+  );
+});
+
 module.exports = router;

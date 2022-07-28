@@ -115,6 +115,23 @@ function addEmp(empId,fName,lName,rId,mId) {
       });
   }
 
+//Update an Employee function
+function updEmp(empId,mId) {
+  axios
+    .put(`http://localhost:${PORT}/api/employee/${empId}`, { "manager_id": mId })
+    .then(function (res) {
+    //   console.log(res);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function (res) {
+    //   // always executed
+      printEmps();
+    });
+}
+
 //Initialize app on successful DB connection
 function init() {
   inquirer
@@ -130,9 +147,10 @@ function init() {
           "Add a Role",
           "View all Employees",
           "Add an Employee",
-          "Do Nothing",
-        ],
-      },
+          "Update Employee Manager",
+          "Do Nothing"
+        ]
+      }
     ])
     .then((choice) => {
       if (choice.action == "View all Departments") {
@@ -210,6 +228,23 @@ function init() {
           ])
           //create employee
           .then((ans) => addEmp(ans.empId,ans.firstName,ans.lastName,ans.roleId,ans.managerId));
+      } else if (choice.action == "Update Employee Manager") {
+        //Ask all required info
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              message: "Employee ID",
+              name: "empId",
+            },
+            {
+                type: "input",
+                message: "Manager ID",
+                name: "managerId",
+            },
+          ])
+          //create employee
+          .then((ans) => updEmp(ans.empId,ans.managerId));
       } else if (choice.action == "Do Nothing") {
         //kill process
         process.exit("Bye!");
