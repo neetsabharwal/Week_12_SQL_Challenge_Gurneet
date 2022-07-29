@@ -18,7 +18,7 @@
   <img src="./assets/Screenshot.png">
 
   ## Video Walkthrough:
-  
+https://user-images.githubusercontent.com/74340217/181791638-e715a0d5-28eb-4436-b7b5-770fa4452b11.mp4
 
   ## Installation:
   App uses NODE.JS, EXPRESS.JS, MYSQL, INQUIRER, CONSOLE.TABLE, and AXIOS or just do 'npm i' through the command line to install the necessary packages. Execute 'node server' and app should run on PORT 3001.
