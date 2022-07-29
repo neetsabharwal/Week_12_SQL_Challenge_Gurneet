@@ -5,7 +5,7 @@ const db = require("../../db/connection");
 
 //Print all employees
 router.get("/employees", (req, res) => {
-  const sql = `SELECT employees.*, roles.title, roles.salary , departments.name FROM employees left join roles on employees.role_id = roles.id left join departments on roles.department_id = departments.id`;
+  const sql = `SELECT employees.id,employees.first_name,employees.last_name, roles.title as title, roles.salary as salary, departments.name as department_name, m.first_name as manager FROM employees left join roles on employees.role_id = roles.id left join departments on roles.department_id = departments.id left outer join employees as m on employees.manager_id = m.id order by employees.id asc`;
   db.query(sql, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
